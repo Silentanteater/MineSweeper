@@ -20,3 +20,18 @@ function populateTheBoard() {
     board.appendChild(buttonArray[i])
   }
 }
+function generateMines(numOfMines, sizeOfBoard) {
+  let mineArray = [];
+  let temp
+  for (let i = 0; i < numOfMines; i++) {
+    do {
+      temp = Math.floor(Math.random() * 64) + 1;
+    } while (mineArray.includes(temp))
+    mineArray[i] = temp;
+  }
+  return mineArray
+}
+
+
+populateTheBoard();
+const mineArray = generateMines(10, 64);
