@@ -4,5 +4,7 @@ h1{text-align:center; font-family:"Arial"}
 .gameHeader{display:flex; justify-content:space-between; height:10%; background:gray; border:2px solid black}
 .timer{width:30%; background:black; text-align:center; color:yellow; font-family:"Sans serif"}
 .flagsLeft{width:30%; background:black; text-align:center; color:yellow; font-family:"Sans serif"}
-.gameBoard{display:flex; flex-flow: row wrap; border:2px solid black; background:gray; height:90%}
-.boardButton{flex-grow:1; flex-basis:12%; flex-shrink:0; min-width:12%}
+.gameBoard{display:flex; flex-flow: row wrap; border:2px solid black; background:gray; height:90%;}
+.boardButton{flex-grow:1; flex-basis:12%; flex-shrink:0; min-width:12%; padding:0; }
+.flagged{background:orange;}
+.exploded{background:darkred;}
