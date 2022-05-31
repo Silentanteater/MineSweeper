@@ -37,12 +37,12 @@ function generateMines(numOfMines, sizeOfBoard) {
   return mineArray
 }
 
-function addListeners() {
-  let buttons = document.querySelectorAll("button");
+function addListeners(mineArray) {
+  let buttons = document.querySelectorAll(".boardButton");
   buttons.forEach(button => {
     button.addEventListener('mousedown', function(event) {
       if (event.which == 1) {
-        Sweep(event.target)
+        Sweep(event.target,mineArray)
       } else {
         event.preventDefault();
         Flag(event.target);
@@ -54,10 +54,12 @@ function addListeners() {
   })
 }
 
-function Sweep(target) {
+function Sweep(target,mineArray) {
   let classList = target.classList;
   if (target.classList.contains("flagged")) {
     target.classList.toggle("flagged");
+    const flagsLeft = document.querySelector(".flagsLeft");
+flagsLeft.textContent = Number(flagsLeft.textContent) + 1;
     return;
   }
   if (mineArray.includes(Number(target.id))) {
@@ -77,7 +79,7 @@ function Sweep(target) {
     }
   }
   if (!classList.contains("topEdge") && !classList.contains("leftEdge")) {
-    if (!mineArray.includes(Number(target.id) - 9)) {
+    if (mineArray.includes(Number(target.id) - 9)) {
       mineNeighbors++;
     }
   }
@@ -92,36 +94,49 @@ function Sweep(target) {
     }
   }
   if (!classList.contains("bottomEdge") && !classList.contains("rightEdge")) {
-    if (!mineArray.includes(Number(target.id) + 9)) {
+    if (mineArray.includes(Number(target.id) + 9)) {
       mineNeighbors++;
     }
   }
   if (!classList.contains("bottomEdge") && !classList.contains("leftEdge")) {
-    if (!mineArray.includes(Number(target.id) + 7)) {
+    if (mineArray.includes(Number(target.id) + 7)) {
       mineNeighbors++;
     }
   }
   if (!classList.contains("topEdge") && !classList.contains("rightEdge")) {
-    if (!mineArray.includes(Number(target.id) - 7)) {
+    if (mineArray.includes(Number(target.id) - 7)) {
       mineNeighbors++;
     }
   }
   target.textContent = mineNeighbors
-  target.disabled = true
+  /**target.disabled = true**/
 
 }
 
 function Flag(target) {
   target.classList.add('flagged');
+  const flagsLeft = document.querySelector(".flagsLeft");
+flagsLeft.textContent = flagsLeft.textContent - 1;
 }
 
 function gameOver() {
-  let buttons = document.querySelectorAll("button");
+  let buttons = document.querySelectorAll(".boardButton");
   buttons.forEach(button => {
     button.disabled = true
   })
 }
 
+function newGame(){
+let buttons = document.querySelectorAll(".boardButton");
+if (buttons){
+buttons.forEach(button=>{button.remove()})}
 populateTheBoard();
 const mineArray = generateMines(10, 64);
-addListeners();
+addListeners(mineArray);
+const newGameButton = document.querySelector(".newGame");
+newGameButton.addEventListener("click", newGame)
+const flagsLeft = document.querySelector(".flagsLeft");
+flagsLeft.textContent = "10"
+}
+
+newGame()
